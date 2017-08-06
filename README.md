@@ -1,6 +1,7 @@
 ### Simple Memory Puzzel
 	
-	##Dependies
+	## Dependies
 		python
 		pygame
-		
+
+	## Run memorypuzzel.py to play game	

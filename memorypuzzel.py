@@ -7,8 +7,8 @@ windowheight = 480
 revealspeed = 8
 boxsize = 40
 gapsize = 10
-boardwidth = 4
-boardheight = 2
+boardwidth = 10
+boardheight = 7
 assert (boardheight*boardwidth %2 ==0)
 
 xmargin = int((windowwidth - (boardwidth*(boxsize+gapsize)))/2) 
