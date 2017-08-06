@@ -9,6 +9,7 @@ boxsize = 40
 gapsize = 10
 boardwidth = 10
 boardheight = 7
+
 assert (boardheight*boardwidth %2 ==0)
 
 xmargin = int((windowwidth - (boardwidth*(boxsize+gapsize)))/2) 
@@ -54,12 +55,16 @@ def main():
 	firstSelection = None
 	displaysurf.fill(bgcolor)
 
+	total_moves = 0
+	displaysurf.fill(bgcolor)
 	startGameAnimation(mainboard)
+	showMoves(total_moves)
+
 	while True:
 		mouseClicked = False
 		displaysurf.fill(bgcolor)
 		drawBoard(mainboard,revealedBoxes)
-
+		showMoves(total_moves)
 		for event in pygame.event.get():
 			mousex,mousey=0,0
 			if event.type==QUIT:
@@ -74,10 +79,13 @@ def main():
 			boxx, boxy = getBoxAtpixet(mousex,mousey)
 	
 			if boxx!=None and boxy!=None:
+				
 				if not revealedBoxes[boxx][boxy]:
 					drawHighlightBox(boxx,boxy)
-
+					showMoves(total_moves	)
 				if not revealedBoxes[boxx][boxy] and mouseClicked:
+					total_moves+=1
+					showMoves(total_moves)
 					revealBoxesAnimation(mainboard,[(boxx,boxy)])
 					revealedBoxes[boxx][boxy] = True
 					if firstSelection==None:
@@ -100,7 +108,9 @@ def main():
 							drawBoard(mainboard,revealedBoxes)
 							pygame.display.update()
 							pygame.time.wait(100)
+							total_moves = 0
 							startGameAnimation(mainboard)
+
 						firstSelection=None		
 		pygame.display.update()		
 		fpsclock.tick(FPS)
@@ -238,6 +248,14 @@ def hasWon(revealedBoxes):
 		if False in i:
 			return False
 	return True		
+def showMoves(score):
+	text= 'Total Moves : ' + str(score)
+	fontObj = pygame.font.Font('freesansbold.ttf', 32)
+	textSurfaceObj = fontObj.render(text, True, cyan, bgcolor)
+	textRectObj = textSurfaceObj.get_rect()
+	textRectObj.center = (500,460)
+	displaysurf.blit(textSurfaceObj, textRectObj)
+	pygame.display.update()
 
 if __name__ == '__main__':
 	main()			
